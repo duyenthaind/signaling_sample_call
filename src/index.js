@@ -18,7 +18,7 @@ const setLocalStream = setStreamFn(localvideoElement);
 const setRemoteStream = setStreamFn(remoteVideoElement);
 const getUserMediaPromise = navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: false
+    video: true
 });
 const pc = new RTCPeerConnection(peerConnectionConfig);
 
