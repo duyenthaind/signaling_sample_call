@@ -157,6 +157,13 @@ const onIceCandidateEvent = async(data) => {
     }
 }
 
+const onPingEvent = async(data) => {
+    if(data.r == null){
+        let eventPacket = genPacket(99, {"body" : null});
+        sendEventPacketToServer(eventPacket);
+    }
+}
+
 const onEventPacketFromServer = async(data) => {
     let packet = JSON.parse(data)
     let service = packet.service;
@@ -178,6 +185,9 @@ const onEventPacketFromServer = async(data) => {
             break;
         case 13:
             await onAnswerEvent(jsonBody);
+            break;
+        case 99:
+            await onPingEvent(jsonBody);
             break;
         default:
             return;
@@ -201,4 +211,11 @@ socket.on('connect', data => {
     }
 
     socket.emit('EventPacket', JSON.stringify(eventPacket))
+})
+
+socket.on('disconnect', data => {
+    let userId = userIdLabel.textContent;
+    let text = userId.fontcolor("red");
+    console.log("Disconnected userId " + userId);
+    userIdLabel.innerHTML = text;  
 })
