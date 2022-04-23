@@ -6,7 +6,10 @@ const peerConnectionConfig = {
 const urlParams = new URLSearchParams(window.location.search);
 var turnOnly = false;
 if (urlParams && urlParams.get('turnOnly')) turnOnly = Boolean(urlParams.get('turnOnly'));
-const socket = io('http://localhost:8088');
+const socket = io('https://localhost:8088',{
+    secure : true,
+    rejectUnauthorized: false
+});
 const accessTokenInput = document.querySelector('#accessToken-input');
 const roomIdInput = document.querySelector("#roomId-input");
 const userIdLabel = document.querySelector("#userId");
